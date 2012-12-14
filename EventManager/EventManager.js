@@ -209,6 +209,23 @@
             }
         };
 
+        EventManager.prototype.unsubscribe = function (eventName, eventFunc) {
+            var subEvents = this.getEventContainer(eventName),
+                node = subEvents.events.firstNode,
+                nodeData;
+
+            console.log(subEvents, node);
+
+            while (node) {
+                nodeData = node.data;
+
+                if (nodeData.name === eventName && nodeData.func === eventFunc) {
+                    subEvents.events.remove(node);
+                }
+                node = node.next;
+            }
+        };
+
         return EventManager;
     }());
 

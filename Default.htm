@@ -9,28 +9,32 @@
     <script type="text/javascript" src="EventManager/EventManager.js"></script>
     <script type="text/javascript">
 
+        function test(phase) {
+            this.innerText = phase + "1";
+        }
+
         var eventManager = new EventManager(document.getElementById("test"));
 
         eventManager.publish("talk", "Oliver-");
+
+        eventManager.subscribe("talk", test);
+        eventManager.unsubscribe("talk", test);
+
+        
         eventManager.publish("talk", "Oliver2-");
-        eventManager.publish("talk", "Oliver3-");
 
-        eventManager.subscribe("talk", function (phase) {
-            this.innerText = phase + "1";
-        });
+        //setTimeout(function () {
+        //    document.getElementById("test").innerText = "";
 
-        setTimeout(function () {
-            document.getElementById("test").innerText = "";
-
-            setTimeout(function () {
-                eventManager.subscribe("talk", function (phase, words) {
-                    this.innerText = phase;
-                }, {
-                    backwards: true,
-                    limit:1
-                });
-            }, 2000);
-        }, 2000);
+        //    setTimeout(function () {
+        //        eventManager.subscribe("talk", function (phase, words) {
+        //            this.innerText = phase;
+        //        }, {
+        //            backwards: true,
+        //            limit:1
+        //        });
+        //    }, 2000);
+        //}, 2000);
 
 
     </script>
