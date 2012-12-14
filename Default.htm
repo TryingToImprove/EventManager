@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+</head>
+<body>
+    <div id="test"></div>
+    <script type="text/javascript" src="EventManager/EventManager.js"></script>
+    <script type="text/javascript">
+
+        var eventManager = new EventManager(document.getElementById("test"));
+
+        eventManager.publish("talk", "Oliver-");
+        eventManager.publish("talk", "Oliver2-");
+        eventManager.publish("talk", "Oliver3-");
+
+        eventManager.subscribe("talk", function (phase) {
+            this.innerText = phase + "1";
+        });
+
+        setTimeout(function () {
+            document.getElementById("test").innerText = "";
+
+            setTimeout(function () {
+                eventManager.subscribe("talk", function (phase, words) {
+                    this.innerText = phase;
+                }, {
+                    backwards: true,
+                    limit:1
+                });
+            }, 2000);
+        }, 2000);
+
+
+    </script>
+</body>
+</html>
